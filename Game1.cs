@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SharpDX.MediaFoundation;
 using System.Collections.Generic;
 
 namespace topic_2_mono_game
@@ -16,6 +17,11 @@ namespace topic_2_mono_game
 
         Rectangle window;
         Vector2 mowerspeed;
+
+        bool keypress;
+        bool soundplaying;
+
+
 
         Rectangle mowerrectangle;
         SoundEffect mowerSound;
@@ -68,24 +74,38 @@ namespace topic_2_mono_game
                 Exit();
             keyboardstate = Keyboard.GetState();
             mowerspeed = Vector2.Zero;
-            if (keyboardstate.IsKeyDown(Keys.W))
+            if ( keyboardstate.IsKeyDown(Keys.Space))
             {
-                mowerspeed.Y += -4;
+                keypress = true;
             }
-            if (keyboardstate.IsKeyDown(Keys.A))
+           if (keypress == true)
             {
-                mowerspeed.X += -4;
+                if (keyboardstate.IsKeyDown(Keys.W))
+                {
+                    mowerspeed.Y += -4;
+                    mowerSoundInstance.Volume = 1.0f;
+                }
+                if (keyboardstate.IsKeyDown(Keys.A))
+                {
+                    mowerspeed.X += -4;
+                    mowerSoundInstance.Volume = 1.0f;
+                }
+                if (keyboardstate.IsKeyDown(Keys.S))
+                {
+                    mowerspeed.Y += 4;
+                    mowerSoundInstance.Volume = 1.0f;
+
+                }
+                if (keyboardstate.IsKeyDown(Keys.D))
+                {
+                    mowerspeed.X += 4;
+                    mowerSoundInstance.Volume = 1.0f;
+                }
+                mowerrectangle.X += (int)mowerspeed.X;
+                mowerrectangle.Y += (int)mowerspeed.Y;
+
             }
-            if (keyboardstate.IsKeyDown(Keys.S))
-            {
-                mowerspeed. Y += 4;
-            }
-            if (keyboardstate.IsKeyDown(Keys.D))
-            {
-                mowerspeed.X += 4dsss;
-            }
-            mowerrectangle.X += (int)mowerspeed.X;
-            mowerrectangle.Y += (int)mowerspeed.Y;
+           
             if (mowerspeed != Vector2.Zero)
             {
                 if (mowerSoundInstance.State != SoundState.Playing)
@@ -104,6 +124,33 @@ namespace topic_2_mono_game
                     i--;
 
                 }
+            if (mowerspeed == Vector2.Zero)
+            {
+               
+                mowerSoundInstance.Volume = 0.2f;
+                mowerSoundInstance.Play();
+            }
+            if (keyboardstate.IsKeyDown(Keys.LeftShift))
+            {
+                keypress = false;
+                mowerSoundInstance.Stop();
+            }
+            if (keyboardstate.IsKeyDown(Keys.Space))
+            {
+                soundplaying = true;
+
+            }
+            if (soundplaying == true)
+            {
+               
+                mowerSoundInstance.Play();
+            }
+            if (mowerspeed != Vector2.Zero)
+            {
+                soundplaying = false;
+               
+            }
+           
 
 
 
