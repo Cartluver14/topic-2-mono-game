@@ -150,7 +150,25 @@ namespace topic_2_mono_game
                 soundplaying = false;
                
             }
-           
+            if (mowerrectangle.X < 0)
+            {
+                mowerrectangle.X = 0;
+            }
+            if (mowerrectangle.Y < 0)
+            {
+                mowerrectangle.Y = 0;
+            }
+            if (mowerrectangle.X > window.Width - mowerrectangle.Width)
+            {
+                mowerrectangle.X = window.Width - mowerrectangle.Width;
+            }
+            if (mowerrectangle.Y > window.Height - mowerrectangle.Height)
+            {
+                mowerrectangle.Y = window.Height - mowerrectangle.Height;
+            }
+
+
+
 
 
 
